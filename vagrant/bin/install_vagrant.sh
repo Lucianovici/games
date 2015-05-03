@@ -14,8 +14,14 @@ export DEBIAN_FRONTEND=noninteractive
 # Use UTF-8 locale.
 sudo locale-gen en_US.UTF-8
 
+# Add postgres Apt repo.
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 sudo apt-get update
 sudo apt-get -q -y install virtualenvwrapper
+sudo apt-get -q -y install libpq-dev postgresql-9.3 postgresql-contrib-9.3 postgresql-client-9.3
+sudo apt-get -q -y install python-dev
 sudo apt-get -q -y install vim
 sudo apt-get -q -y install git
 

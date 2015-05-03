@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '3*@vw6*l^b86#28&9@6#)+5_mx$)m7leml!33
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (

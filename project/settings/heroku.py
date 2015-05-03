@@ -15,3 +15,10 @@ DATABASES = {
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 SSLIFY_DISABLE = False
+
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
