@@ -20,7 +20,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 
 sudo apt-get update
 sudo apt-get -q -y install virtualenvwrapper
-sudo apt-get -q -y install libpq-dev postgresql-9.3 postgresql-contrib-9.3 postgresql-client-9.3
+sudo apt-get -q -y install libpq-dev postgresql-9.4 postgresql-contrib-9.4 postgresql-client-9.4
 sudo apt-get -q -y install python-dev
 sudo apt-get -q -y install vim
 sudo apt-get -q -y install git
