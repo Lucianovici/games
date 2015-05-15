@@ -22,3 +22,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+WS4REDIS_CONNECTION = {
+    'host': os.environ.get('REDISTOGO_HOST', 'localhost'),
+    'port': os.environ.get('REDISTOGO_PORT', 6379),
+    'db': os.environ.get('REDISTOGO_DB', 0),
+    'password': os.environ.get('REDISTOGO_PASSWORD', None),
+}

@@ -91,10 +91,3 @@ WS4REDIS_PREFIX = 'ws'
 
 WS4REDIS_EXPIRE = 3600
 
-WS4REDIS_CONNECTION = {
-    'host': 'localhost',
-    'port': 6379,
-    'db': 0,
-    'password': None,
-}
-
