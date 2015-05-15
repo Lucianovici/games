@@ -23,7 +23,6 @@ ALLOWED_HOSTS += ('192.168.33.111',)
 # It overrides Django’s internal main loop and adds a URL dispatcher in front of the request handle.
 WSGI_APPLICATION = 'ws4redis.django_runserver.application'
 
-
 WS4REDIS_CONNECTION = {
     'host': 'localhost',
     'port': 6379,
