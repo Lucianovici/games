@@ -1,1 +1,1 @@
-web: newrelic-admin run-program uwsgi --http :80 --gevent 100 --http-websockets --module project.wsgi
+web: newrelic-admin run-program uwsgi --ini project/uwsgi.ini
