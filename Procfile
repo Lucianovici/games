@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn project.wsgi --log-file -
+web: newrelic-admin run-program uwsgi --http :80 --gevent 100 --http-websockets --module project.wsgi

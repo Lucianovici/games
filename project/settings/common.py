@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Project's common settings.
 """
@@ -24,6 +25,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ws4redis',
+    'landing',
+    'chat',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -43,7 +47,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, '../landing/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -52,6 +55,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.static',
+                'ws4redis.context_processors.default',
             ],
         },
     },
@@ -78,3 +83,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Websocket
+WEBSOCKET_URL = '/ws/'
+
+WS4REDIS_PREFIX = 'ws'
+
+WS4REDIS_EXPIRE = 3600
+
+WS4REDIS_CONNECTION = {
+    'host': 'localhost',
+    'port': 6379,
+    'db': 0,
+    'password': None,
+}
+

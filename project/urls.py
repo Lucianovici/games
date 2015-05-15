@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from chat import urls as chat_urls
 
 from landing import urls as landing_urls
 
@@ -23,7 +24,7 @@ from landing import urls as landing_urls
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    # Import here more app urls.
+    url(r'example/', include(chat_urls)),
 
     # Landing page.
     url(r'^', include(landing_urls)),
