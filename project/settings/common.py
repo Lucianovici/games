@@ -4,16 +4,12 @@ Project's common settings.
 """
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DJANGO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', '3*@vw6*l^b86#28&9@6#)+5_mx$)m7leml!333(!1s!)@^d71^')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -56,6 +52,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.static',
+                'django.core.context_processors.media',
                 'ws4redis.context_processors.default',
             ],
         },
@@ -81,8 +78,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_BASE_DIR, 'assets'),
+    os.path.join(DJANGO_ROOT, 'chat/assets')
+)
 
+STATIC_ROOT = os.path.join(PROJECT_BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(PROJECT_BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Websocket
 WEBSOCKET_URL = '/ws/'
@@ -90,4 +95,3 @@ WEBSOCKET_URL = '/ws/'
 WS4REDIS_PREFIX = 'ws'
 
 WS4REDIS_EXPIRE = 3600
-

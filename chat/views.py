@@ -1,54 +1,38 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User, Group
-from django.http import HttpResponse
+"""
+Chat views.
+"""
+import uuid
+
+from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
-from django.views.decorators.csrf import csrf_exempt
 from ws4redis.redis_store import RedisMessage
 from ws4redis.publisher import RedisPublisher
 
 
-class BroadcastChatView(TemplateView):
-    template_name = 'chat/broadcast_chat.html'
+class ChatRoomView(TemplateView):
+    """
+    View handling URL based private room.
+    """
+    template_name = 'chat/base.html'
 
     def get(self, request, *args, **kwargs):
-        welcome = RedisMessage('Hello everybody')  # create a welcome message to be sent to everybody
-        RedisPublisher(facility='foobar', broadcast=True).publish_message(welcome)
-        return super(BroadcastChatView, self).get(request, *args, **kwargs)
-
-
-class UserChatView(TemplateView):
-    template_name = 'chat/user_chat.html'
+        welcome = RedisMessage('Hello everybody')
+        room_token = kwargs.get('token')
+        RedisPublisher(facility=room_token, broadcast=True).publish_message(welcome)
+        return super(ChatRoomView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(UserChatView, self).get_context_data(**kwargs)
-        context.update(users=User.objects.all())
+        context = super(ChatRoomView, self).get_context_data(**kwargs)
+        context['token'] = kwargs.get('token')
         return context
 
-    @csrf_exempt
-    def dispatch(self, *args, **kwargs):
-        return super(UserChatView, self).dispatch(*args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        redis_publisher = RedisPublisher(facility='foobar', users=[request.POST.get('user')])
-        message = RedisMessage(request.POST.get('message'))
-        redis_publisher.publish_message(message)
-        return HttpResponse('OK')
+class ChatRoomTokenView(TemplateView):
+    """
+    View generating unique tokens to be used in URL based private rooms.
+    """
 
-
-class GroupChatView(TemplateView):
-    template_name = 'chat/group_chat.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(GroupChatView, self).get_context_data(**kwargs)
-        context.update(groups=Group.objects.all())
-        return context
-
-    @csrf_exempt
-    def dispatch(self, *args, **kwargs):
-        return super(GroupChatView, self).dispatch(*args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        redis_publisher = RedisPublisher(facility='foobar', groups=[request.POST.get('group')])
-        message = RedisMessage(request.POST.get('message'))
-        redis_publisher.publish_message(message)
-        return HttpResponse('OK')
+    def get(self, request, *args, **kwargs):
+        room_token = uuid.uuid4().hex
+        return redirect('chat-room', token=room_token)

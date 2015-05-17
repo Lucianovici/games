@@ -24,7 +24,7 @@ from landing import urls as landing_urls
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'example/', include(chat_urls)),
+    url(r'chat/', include(chat_urls)),
 
     # Landing page.
     url(r'^', include(landing_urls)),

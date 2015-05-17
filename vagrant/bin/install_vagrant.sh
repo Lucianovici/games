@@ -3,6 +3,12 @@
 VIRTUALENV_PATH=/home/vagrant/virtualenv
 BACKEND_PATH=/home/vagrant/games
 
+# Env vars
+echo "export DJANGO_SETTINGS_MODULE='project.settings.vagrant'" >> /home/vagrant/.bash_profile
+
+source /home/vagrant/.bash_profile
+
+
 # Change to home vagrant folder.
 cd ~
 
