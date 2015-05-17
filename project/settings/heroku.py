@@ -16,13 +16,6 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 SSLIFY_DISABLE = False
 
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_BASE_DIR, 'static'),
-)
-
 WS4REDIS_CONNECTION = {
     'host': os.environ.get('REDISTOGO_HOST', 'localhost'),
     'port': os.environ.get('REDISTOGO_PORT', 6379),
