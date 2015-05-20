@@ -1,19 +1,23 @@
 chatApp.controller('ChatController', [
-    '$scope', '$attrs', '$websocket',
-    function ($scope, $attrs, $websocket) {
-        $scope.chatHistory = [];
-        $scope.socket = $websocket.$new($attrs.socketUrl);
+    '$scope', '$attrs', 'websocketService',
+    function ($scope, $attrs, websocketService) {
+        websocketService.init($attrs.socketUrl);
+    }
+]);
 
-        $scope.playerName = "Player " + Math.random();
+chatApp.controller('RoomController', [
+    '$scope', 'userService', 'websocketService',
+    function ($scope, userService, websocketService) {
+        $scope.chatHistory = [];
 
         $scope.sendMessage = function (message) {
-            $scope.socket.$emit('chatRoom', {
-                player: $scope.playerName,
+            websocketService.socket.$emit('chatRoom', {
+                username: userService.username,
                 message: message
             });
         };
 
-        $scope.onChatMessageKeyUp = function(e) {
+        $scope.onChatMessageKeyUp = function (e) {
             var isEnterKeyUp = e.keyCode == 13;
             if (isEnterKeyUp) {
                 $scope.sendMessage($scope.chatMessage);
@@ -21,21 +25,48 @@ chatApp.controller('ChatController', [
             }
         };
 
-        $scope.socket.$on('$open', function () {
-            $scope.socket.$emit('chatRoom', {
-                player: $scope.playerName,
-                message: "Joined the room."
-            });
+        $scope.isUsernameSet = function () {
+            return !!userService.username;
+        };
+
+        websocketService.socket.$on('$open', function () {
         });
 
-        $scope.socket.$on('chatRoom', function (data) {
-            console.log($scope.$$phase);
+        websocketService.socket.$on('chatRoom', function (data) {
             $scope.chatHistory.push(data);
             $scope.$apply();
         });
 
-        $scope.socket.$on('$close', function () {
+        websocketService.socket.$on('$close', function () {
             console.log('Socket closed.');
         });
+    }
+]);
+
+chatApp.controller('UserController', [
+    '$scope', 'userService', 'websocketService',
+    function ($scope, userService, websocketService) {
+        $scope.joinRoomChat = function (username) {
+            userService.setUsername(username);
+            $scope.sendWelcomeMessage();
+        };
+
+        $scope.sendWelcomeMessage = function () {
+            websocketService.socket.$emit('chatRoom', {
+                username: userService.username,
+                message: "Joined the room."
+            });
+        };
+
+        $scope.onUsernameKeyUp = function (e) {
+            var isEnterKeyUp = e.keyCode == 13;
+            if (isEnterKeyUp) {
+                $scope.joinRoomChat($scope.username);
+            }
+        };
+
+        $scope.isUsernameSet = function () {
+            return !!userService.username;
+        };
     }
 ]);

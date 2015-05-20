@@ -1,0 +1,20 @@
+{% verbatim %}
+<div id="username" class="row">
+    <div class=col-md-12">
+        <div class="input-group" ng-hide="isUsernameSet()">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Your nickname"
+                   ng-keyup="onUsernameKeyUp($event)"
+                   ng-model="username"/>
+
+            <div class="input-group-btn">
+                <button class="btn btn-default"
+                        type="submit"
+                        ng-click="joinRoomChat(username)">Join
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}

@@ -17,7 +17,13 @@
     {% block main_content %}
         <div ng-controller="ChatController"
              data-socket-url="{{ WEBSOCKET_URI }}{{ token }}?subscribe-broadcast&publish-broadcast&echo">
-            {% include "chat/angular/chat.html" %}
+
+            <div ng-controller="UserController">
+                {% include "chat/angular/user.html" %}
+            </div>
+            <div ng-controller="RoomController">
+                {% include "chat/angular/chat.html" %}
+            </div>
         </div>
     {% endblock %}
 </div>
@@ -27,6 +33,7 @@
     <script src="{{ STATIC_URL }}vendor/angular/ng-websocket.js"></script>
 
     <script src="{{ STATIC_URL }}chat/js/chat_app/module.js"></script>
+    <script src="{{ STATIC_URL }}chat/js/chat_app/services.js"></script>
     <script src="{{ STATIC_URL }}chat/js/chat_app/controllers.js"></script>
 {% endblock %}
 </body>
